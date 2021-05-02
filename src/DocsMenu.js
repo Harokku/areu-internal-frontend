@@ -96,8 +96,10 @@ const DocsMenu = props => {
         return (
             <>
                 <Panel className="p-d-flex" header="Documenti">
-                    <DocsSearch searchList={searchitems} selectedCallback={requireFile}/>
-                    <PanelMenu model={menuItems} />
+                    <div className='p-pb-2'>
+                        <DocsSearch searchList={searchitems} selectedCallback={requireFile}/>
+                    </div>
+                    <PanelMenu model={menuItems}/>
                 </Panel>
             </>
         );
