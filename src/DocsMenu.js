@@ -1,10 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import PropTypes from 'prop-types';
+
 import {PanelMenu} from "primereact/panelmenu";
-import {isInaccessible} from "@testing-library/react";
+import DocsSearch from "./DocsSearch";
+import {Card} from "primereact/card";
+import {Panel} from "primereact/panel";
 
 const DocsMenu = props => {
+        const [searchitems, setSearchItems] = useState([])
         const [menuItems, setMenuItems] = useState([])
 
         useEffect(() => {
@@ -12,26 +15,52 @@ const DocsMenu = props => {
             }, []
         )
 
-        const buildMenuItems = (rawData) => {
-            let result = []
+        // Build prime compliant autocomplete object
+        const buildSearchItems = (rawData) => {
+            // Filter out directory, we need only files to be processed
             let filtered = rawData.filter(e => !e.is_dir)
 
+            const result = filtered.map(item => (
+                {
+                    label: item.display_name,
+                    value: item.id
+                }
+            ))
+
+            return result
+        }
+
+        // Build prime compliant menu object
+        const buildMenuItems = (rawData) => {
+            // Start with empty array
+            let result = []
+            // Filter out directory, we need only files to be processed
+            let filtered = rawData.filter(e => !e.is_dir)
+
+            // Reduce file items
             filtered.reduce((r, item) => {
+                // Replay backend _ with whitespace on path, split it and reduce level by level
                 item.category.replaceAll('_', ' ').split('/').reduce((o, label, index, array) => {
+                    // Check if next level exist and set to it or add an empty array to push in
                     let temp = (o.items = o.items || []).find(q => q.label === label)
+                    // If actual level not exist add it
                     if (!temp) {
                         o.items.push(temp = {label})
                     }
+                    // If at last item (path reconstructed) add file item and info
                     if (array[array.length - 1] === label) {
                         temp.items = temp.items || []
                         temp.items.push({
                             id: item.id,
                             label: item.display_name,
+                            icon: 'pi pi-file-pdf',
                             command: (event) => requireFile(event.item.id),
                         })
                     }
+                    // Return actual level
                     return temp
                 }, r)
+                // Return item converted into menu element
                 return r
             }, {items: result})
 
@@ -43,8 +72,7 @@ const DocsMenu = props => {
             const res = await axios(
                 `${process.env.REACT_APP_BACKEND}/api/v1/docs`
             )
-            //setRawData(res.data.data)
-            //buildMenuItems(res.data.data)
+            setSearchItems(buildSearchItems(res.data.data))
             setMenuItems(buildMenuItems(res.data.data))
         }
 
@@ -67,7 +95,10 @@ const DocsMenu = props => {
 
         return (
             <>
-                <PanelMenu model={menuItems} style={{maxWidth: '400px'}}/>
+                <Panel className="p-d-flex" header="Documenti">
+                    <DocsSearch searchList={searchitems} selectedCallback={requireFile}/>
+                    <PanelMenu model={menuItems} />
+                </Panel>
             </>
         );
     }
