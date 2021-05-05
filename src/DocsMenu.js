@@ -3,7 +3,6 @@ import axios from "axios";
 
 import {PanelMenu} from "primereact/panelmenu";
 import DocsSearch from "./DocsSearch";
-import {Card} from "primereact/card";
 import {Panel} from "primereact/panel";
 
 const DocsMenu = props => {

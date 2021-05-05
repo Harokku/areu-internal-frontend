@@ -8,10 +8,10 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import SideMenu from "./SideMenu";
-import DocsMenu from "./DocsMenu";
 import logo from './logoAreu2021.jpg'
 import {Avatar} from "primereact/avatar";
 import {Divider} from "primereact/divider";
+import ColumnContainer from "./ColumnContainer"
 
 function App() {
 
@@ -25,14 +25,7 @@ function App() {
                 <h1 className='p-d-inline p-pl-4' style={{fontFamily: 'Nunito'}}>Intranet SOREU Laghi</h1>
             </div>
             <Divider/>
-            <div className="p-grid p-p-2">
-                <div className="p-col-fixed" style={{width: '200px'}}>
-                    <SideMenu/>
-                </div>
-                <div className="p-col p-ml-2">
-                    <DocsMenu/>
-                </div>
-            </div>
+            <ColumnContainer/>
         </>
     );
 }

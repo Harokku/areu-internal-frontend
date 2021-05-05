@@ -9,16 +9,36 @@ const SideMenu = props => {
         {
             label: "Documenti scaricabili",
             items: [
-                {label: 'Documenti', icon: 'pi pi-fw pi-file'},
+                {
+                    id: 'documenti',
+                    label: 'Documenti',
+                    icon: 'pi pi-fw pi-file',
+                    command: (event) => props.menuToggleCallback(event.item.id)
+                },
                 {label: 'Moduli', icon: 'pi pi-fw pi-file'}
             ]
         },
         {
             label: "Turni",
             items: [
-                {label: 'Tecnici', icon: 'pi pi-fw pi-calendar'},
-                {label: 'Infermieri', icon: 'pi pi-fw pi-calendar'},
-                {label: 'Medici', icon: 'pi pi-fw pi-calendar'},
+                {
+                    id: 'turni-tecnici',
+                    label: 'Tecnici',
+                    icon: 'pi pi-fw pi-calendar',
+                    command: (event) => props.menuToggleCallback(event.item.id)
+                },
+                {
+                    id: 'turni-infermieri',
+                    label: 'Infermieri',
+                    icon: 'pi pi-fw pi-calendar',
+                    command: (event) => props.menuToggleCallback(event.item.id)
+                },
+                {
+                    id: 'turni-medici',
+                    label: 'Medici',
+                    icon: 'pi pi-fw pi-calendar',
+                    command: (event) => props.menuToggleCallback(event.item.id)
+                },
             ]
         },
         {
@@ -38,6 +58,8 @@ const SideMenu = props => {
     );
 };
 
-SideMenu.propTypes = {};
+SideMenu.propTypes = {
+    menuToggleCallback: PropTypes.func.isRequired
+};
 
 export default SideMenu;
