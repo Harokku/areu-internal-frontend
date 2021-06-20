@@ -7,7 +7,6 @@ import 'primereact/resources/themes/nova/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-import SideMenu from "./SideMenu";
 import logo from './logoAreu2021.jpg'
 import {Avatar} from "primereact/avatar";
 import {Divider} from "primereact/divider";

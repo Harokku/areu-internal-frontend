@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import "./ColumnContainer.css"
 import DocsMenu from "./DocsMenu";
 import ShiftMenu from "./ShiftMenu";
 import SideMenu from "./SideMenu";
@@ -42,19 +43,23 @@ const ColumnContainer = (props) => {
 
     return (
         <>
-            <div className="p-grid p-p-2 p-d-flex p-flex-wrap">
-                <div className="p-col-fixed" style={{width: '200px'}}>
-                    <SideMenu menuToggleCallback={menuToggle}/>
+            <div className='p-d-flex'>
+                <div className="sidebar">
+                    <div className="" >
+                        <SideMenu menuToggleCallback={menuToggle}/>
+                    </div>
                 </div>
-                {items.map(item => {
-                    if (item.visible) {
-                        return (
-                            <div key={item.id} className="p-col p-ml-2" style={{minWidth: '475px'}}>
-                                {React.createElement(item.comp, item.props, null)}
-                            </div>
-                        )
-                    }
-                })}
+                <div className="p-grid p-m-2 p-flex-wrap">
+                    {items.map((item) => {
+                        if (item.visible) {
+                            return (
+                                <div key={item.id} className="p-col">
+                                    {React.createElement(item.comp, item.props, null)}
+                                </div>
+                            )
+                        }
+                    })}
+                </div>
             </div>
         </>
     )
