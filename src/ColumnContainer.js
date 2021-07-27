@@ -3,11 +3,12 @@ import "./ColumnContainer.css"
 import DocsMenu from "./DocsMenu";
 import ShiftMenu from "./ShiftMenu";
 import SideMenu from "./SideMenu";
+import TableData from "./TableData";
 
 const ColumnContainer = (props) => {
     const [items, setItems] = useState([
             {id: 'documenti', comp: DocsMenu, props: null, visible: true},
-            {id: 'turni', comp: ShiftMenu, props: {items: ['tecnici']}, visible: true},
+            {id: 'turni', comp: ShiftMenu, props: {items: []}, visible: false},
         ]
     )
 
@@ -50,6 +51,9 @@ const ColumnContainer = (props) => {
                     </div>
                 </div>
                 <div className="p-grid p-m-2 p-flex-wrap">
+                    <div className="p-col">
+                        <TableData header="Linee entrata" content="lineesoreu"/>
+                    </div>
                     {items.map((item) => {
                         if (item.visible) {
                             return (

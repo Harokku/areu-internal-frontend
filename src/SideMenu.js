@@ -15,38 +15,12 @@ const SideMenu = props => {
                     icon: 'pi pi-fw pi-file',
                     command: (event) => props.menuToggleCallback(event.item.id)
                 },
-                {label: 'Moduli', icon: 'pi pi-fw pi-file'}
-            ]
-        },
-        {
-            label: "Turni",
-            items: [
-                {
-                    id: 'turni-tecnici',
-                    label: 'Tecnici',
-                    icon: 'pi pi-fw pi-calendar',
-                    command: (event) => props.menuToggleCallback(event.item.id)
-                },
-                {
-                    id: 'turni-infermieri',
-                    label: 'Infermieri',
-                    icon: 'pi pi-fw pi-calendar',
-                    command: (event) => props.menuToggleCallback(event.item.id)
-                },
-                {
-                    id: 'turni-medici',
-                    label: 'Medici',
-                    icon: 'pi pi-fw pi-calendar',
-                    command: (event) => props.menuToggleCallback(event.item.id)
-                },
             ]
         },
         {
             label: "Link",
             items: []
         },
-        {label: 'Linee SOREU', icon: 'pi pi-fw pi-info-circle'},
-        {label: 'Utenze', icon: 'pi pi-fw pi-info-circle'},
     ]
 
     return (
@@ -63,3 +37,27 @@ SideMenu.propTypes = {
 };
 
 export default SideMenu;
+
+/*{
+    label: "Turni",
+        items: [
+    {
+        id: 'turni-tecnici',
+        label: 'Tecnici',
+        icon: 'pi pi-fw pi-calendar',
+        command: (event) => props.menuToggleCallback(event.item.id)
+    },
+    {
+        id: 'turni-infermieri',
+        label: 'Infermieri',
+        icon: 'pi pi-fw pi-calendar',
+        command: (event) => props.menuToggleCallback(event.item.id)
+    },
+    {
+        id: 'turni-medici',
+        label: 'Medici',
+        icon: 'pi pi-fw pi-calendar',
+        command: (event) => props.menuToggleCallback(event.item.id)
+    },
+]
+}*/
