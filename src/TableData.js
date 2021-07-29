@@ -20,7 +20,6 @@ const TableData = props => {
 
     // Fetch data from backend (url from env)
     const fetchData = async () => {
-        console.info(process.env.REACT_APP_BACKEND)
         const res = await axios(
             `${process.env.REACT_APP_BACKEND}/api/v1/content/${props.content}`
         )

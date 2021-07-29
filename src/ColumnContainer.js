@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "./ColumnContainer.css"
 import DocsMenu from "./DocsMenu";
 import ShiftMenu from "./ShiftMenu";
@@ -6,6 +6,7 @@ import TableData from "./TableData";
 import {Button} from "primereact/button";
 import {Sidebar} from "primereact/sidebar";
 import {Menu} from "primereact/menu";
+import axios from "axios";
 
 const ColumnContainer = (props) => {
     //If side menu is visible or hidden
@@ -17,23 +18,65 @@ const ColumnContainer = (props) => {
         ]
     )
     //Menu items to display in side menu
-    const [menuItems, setMenuItems] = useState([{
-            label: "Documenti scaricabili",
-            items: [
-                {
-                    id: 'documenti',
-                    label: 'Documenti',
-                    icon: 'pi pi-fw pi-file',
-                    command: (event) => componentToggle(event.item.id),
-                },
-            ]
-        },
+    //useState set hardcoded value, subsequent useEffect will fetch index from backend and build menu hierarchy
+    const [menuItems, setMenuItems] = useState([
+            {
+                label: "Documenti scaricabili",
+                items: [
+                    {
+                        id: 'documenti',
+                        label: 'Documenti',
+                        icon: 'pi pi-fw pi-file',
+                        command: (event) => componentToggle(event.item.id),
+                    },
+                ]
+            },
             {
                 label: "Info",
                 items: []
             },
         ]
     )
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    const fetchData = async () => {
+        const res = await axios(
+            `${process.env.REACT_APP_BACKEND}/api/v1/content`
+        )
+        buildMenu(res.data.data)
+    }
+
+    //Build menu object based on backend index data and update state
+    const buildMenu = (index) => {
+        //Build content menu items and update state
+        const menuItemList = index.map(item => (
+            {
+                id: item.link,
+                label: item.display_name,
+                icon: 'pi pi-fw pi-file',
+                command: (event) => componentToggle(event.item.id)
+            }
+        ))
+        setMenuItems(prev => prev.map(i => (
+            i.label === "Info"
+                ? {...i, items: menuItemList}
+                : i
+        )))
+
+        //Build component items and add to component to display array
+        const componentList = index.map(item => (
+            {
+                id: item.link,
+                comp: TableData,
+                props: {header: item.display_name, content: item.link},
+                visible: false
+            }
+        ))
+        setCompToDisplay(prev => [...prev, ...componentList])
+    }
 
     //Toggle component visibility
     const componentToggle = (id) => {
@@ -84,9 +127,6 @@ const ColumnContainer = (props) => {
             </div>
             <div>
                 <div className="p-grid p-m-2 p-flex-wrap">
-                    <div className="p-col">
-                        <TableData header="Linee entrata" content="lineesoreu"/>
-                    </div>
                     {compToDisplay.map((item) => {
                         if (item.visible) {
                             return (
