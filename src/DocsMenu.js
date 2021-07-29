@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
+import "./DocsMenu.css"
 
 import {PanelMenu} from "primereact/panelmenu";
 import DocsSearch from "./DocsSearch";
@@ -95,7 +96,7 @@ const DocsMenu = props => {
 
         return (
             <>
-                <Panel className="p-d-flex" header="Documenti">
+                <Panel className="p-m-2" header="Documenti">
                     <div className='p-pb-2'>
                         <DocsSearch searchList={searchitems} selectedCallback={requireFile}/>
                     </div>

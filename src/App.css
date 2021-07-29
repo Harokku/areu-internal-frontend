@@ -1,0 +1,23 @@
+.navposition {
+    position: sticky;
+    top: 0;
+    align-items: center;
+    background-color: white;
+    z-index: 1;
+    padding: 5px;
+}
+
+.title {
+    font-family: "Segoe UI", Nunito, Tahoma, sans-serif;
+    color: dimgray;
+    margin-right: 10px;
+}
+
+.avatar {
+    margin-right: auto;
+    margin-left: 10px;
+}
+
+img {
+    max-width: 100px;
+}

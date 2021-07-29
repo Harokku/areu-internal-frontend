@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import "./ColumnContainer.css"
 import DocsMenu from "./DocsMenu";
-import ShiftMenu from "./ShiftMenu";
 import TableData from "./TableData";
 import {Button} from "primereact/button";
 import {Sidebar} from "primereact/sidebar";
@@ -13,8 +12,7 @@ const ColumnContainer = (props) => {
     const [showMenu, setShowMenu] = useState(false)
     //Components to display in the main view
     const [compToDisplay, setCompToDisplay] = useState([
-            {id: 'documenti', comp: DocsMenu, props: null, visible: true},
-            {id: 'turni', comp: ShiftMenu, props: {items: []}, visible: false},
+            {id: 'documenti', comp: DocsMenu, props: {key: 'documenti'}, visible: true},
         ]
     )
     //Menu items to display in side menu
@@ -71,8 +69,8 @@ const ColumnContainer = (props) => {
             {
                 id: item.link,
                 comp: TableData,
-                props: {header: item.display_name, content: item.link},
-                visible: false
+                props: {key: item.link, header: item.display_name, content: item.link},
+                visible: true
             }
         ))
         setCompToDisplay(prev => [...prev, ...componentList])
@@ -119,24 +117,19 @@ const ColumnContainer = (props) => {
 
     return (
         <>
-            <div className='p-d-flex'>
-                <Button icon="pi pi-bars" onClick={() => setShowMenu(true)}/>
-                <Sidebar visible={showMenu} onHide={() => setShowMenu(false)}>
-                    <Menu model={menuItems}/>
-                </Sidebar>
-            </div>
-            <div>
-                <div className="p-grid p-m-2 p-flex-wrap">
-                    {compToDisplay.map((item) => {
-                        if (item.visible) {
-                            return (
-                                <div key={item.id} className="p-col">
-                                    {React.createElement(item.comp, item.props, null)}
-                                </div>
-                            )
-                        }
-                    })}
-                </div>
+            <div className='menucontainer'>
+                <Button icon="pi pi-bars" onClick={() => setShowMenu(true)}/></div>
+            <Sidebar visible={showMenu} onHide={() => setShowMenu(false)}>
+                <Menu model={menuItems}/>
+            </Sidebar>
+            <div className="p-d-flex p-flex-wrap p-jc-around">
+                {compToDisplay.map((item) => {
+                    if (item.visible) {
+                        return (
+                            React.createElement(item.comp, item.props, null)
+                        )
+                    }
+                })}
             </div>
         </>
     )

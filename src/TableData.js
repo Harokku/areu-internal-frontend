@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
+import "./TableData.css"
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
 import axios from "axios";
@@ -29,13 +30,13 @@ const TableData = props => {
 
     return (
         <>
-            <Panel className="p-d-flex" header={props.header}>
+            <Panel className="p-m-2 childelem" header={props.header}>
                 <div className='p-pb-2'>
                     <div className="p-inputgroup">
                        <span className="p-float-label">
-                            <InputText id="globalsearchtext" value={globalFilter}
+                            <InputText id={`${props.header}-globalsearchtext`} value={globalFilter}
                                        onChange={(e) => setGlobalFilter(e.target.value)}/>
-                            <label htmlFor="globalsearchtext">Cerca...</label>
+                            <label htmlFor={`${props.header}-globalsearchtext`}>Cerca...</label>
                         </span>
                         <Button icon="pi pi-times" className="p-button-danger"
                                 onClick={() => setGlobalFilter('')}/>

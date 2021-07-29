@@ -1,7 +1,8 @@
-.sidebar {
-    /*width: 20%;*/
-    /*height: 100vh;*/
-    position: -webkit-sticky;
+.menucontainer {
     position: sticky;
-    top: 5%;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
 }
