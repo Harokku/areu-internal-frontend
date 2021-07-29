@@ -1,63 +1,22 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Menu} from "primereact/menu";
-import {Button} from "primereact/button";
 
 const SideMenu = props => {
-    const menu = useRef(null)
-    const items = [
-        {
-            label: "Documenti scaricabili",
-            items: [
-                {
-                    id: 'documenti',
-                    label: 'Documenti',
-                    icon: 'pi pi-fw pi-file',
-                    command: (event) => props.menuToggleCallback(event.item.id)
-                },
-            ]
-        },
-        {
-            label: "Link",
-            items: []
-        },
-    ]
+    const menut =()=>{
+        console.log("from inside")
+    }
 
     return (
         <>
-            <Menu className='p-d-none p-d-sm-block' model={items}/>
-            <Menu model={items} popup ref={menu}/>
-            <Button className='p-d-sm-none' label='Menu' icon='pi pi-bars' onClick={(e) => menu.current.toggle(e)}/>
+
         </>
     );
 };
 
 SideMenu.propTypes = {
-    menuToggleCallback: PropTypes.func.isRequired
+    menuToggleCallback: PropTypes.func.isRequired,
+    items: PropTypes.array.isRequired
 };
 
 export default SideMenu;
-
-/*{
-    label: "Turni",
-        items: [
-    {
-        id: 'turni-tecnici',
-        label: 'Tecnici',
-        icon: 'pi pi-fw pi-calendar',
-        command: (event) => props.menuToggleCallback(event.item.id)
-    },
-    {
-        id: 'turni-infermieri',
-        label: 'Infermieri',
-        icon: 'pi pi-fw pi-calendar',
-        command: (event) => props.menuToggleCallback(event.item.id)
-    },
-    {
-        id: 'turni-medici',
-        label: 'Medici',
-        icon: 'pi pi-fw pi-calendar',
-        command: (event) => props.menuToggleCallback(event.item.id)
-    },
-]
-}*/
