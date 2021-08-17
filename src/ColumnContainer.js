@@ -6,6 +6,7 @@ import {Button} from "primereact/button";
 import {Sidebar} from "primereact/sidebar";
 import {Menu} from "primereact/menu";
 import axios from "axios";
+import DocsRecent from "./DocsRecent";
 
 const ColumnContainer = (props) => {
     //If side menu is visible or hidden
@@ -123,6 +124,7 @@ const ColumnContainer = (props) => {
                 <Menu model={menuItems}/>
             </Sidebar>
             <div className="p-d-flex p-flex-wrap p-jc-around">
+                <DocsRecent/>
                 {compToDisplay.map((item) => {
                     if (item.visible) {
                         return (
