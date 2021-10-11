@@ -28,6 +28,10 @@ const TableData = props => {
         setTableContent(res.data.data)
     }
 
+    const renderLinkTemplate = (rawData, content) => {
+        return rawData[content].startsWith("http://") || rawData[content].startsWith("https://") ? <a href={rawData[content]}>Apri link</a> : <span>{rawData[content]}</span>
+    }
+
     return (
         <>
             <Panel className="p-m-2 childelem" header={props.header}>
@@ -49,7 +53,9 @@ const TableData = props => {
                         {/*Map trough header and build column accordingly*/}
                         {tableHeaders.map((header, index) => (
                             <Column key={index} field={header}
-                                    header={header[0].toUpperCase() + header.slice(1).toLowerCase()}/>
+                                    header={header[0].toUpperCase() + header.slice(1).toLowerCase()}
+                                    body={(e) => renderLinkTemplate(e, header)}
+                            />
                         ))}
                     </DataTable>
                 </div>

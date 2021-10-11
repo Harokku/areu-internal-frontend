@@ -33,7 +33,6 @@ const DocsRecent = (props) => {
         if (!ws.current) return;
 
         ws.current.onmessage = e => {
-            console.log(e)
             const parsedMessage = JSON.parse(e.data)
             setwsUpdate(parsedMessage)
             // If event if od type CREATE > shoe info toast
@@ -85,8 +84,10 @@ const DocsRecent = (props) => {
     return (
         <>
             <Panel className="p-m-2 childelem" header="Documenti recenti">
-                <Toast ref={toast}/>
-                <ListBox options={recentList} onChange={(e) => requireFile(e.value)} filter/>
+                <div className="card">
+                    <Toast ref={toast}/>
+                    <ListBox options={recentList} onChange={(e) => requireFile(e.value)} filter/>
+                </div>
             </Panel>
         </>
     )
