@@ -36,13 +36,15 @@ const DocsMenu = props => {
             let result = []
             // Filter out directory, we need only files to be processed
             let filtered = rawData.filter(e => !e.is_dir)
-            // Detect if os is windows and set separator accordingly
+            const pathSeparator = "/"
+            //FIXME: Non necessary due to backend generalization, remove after enough test
+            /*// Detect if os is windows and set separator accordingly
             let pathSeparator = "/"
-            if (navigator.appVersion.indexOf("Win")!==-1) pathSeparator="\\";
+            if (navigator.appVersion.indexOf("Win")!==-1) pathSeparator="\\";*/
 
             // Reduce file items
             filtered.reduce((r, item) => {
-                // Replay backend _ with whitespace on path, split it and reduce level by level
+                // Replace backend _ with whitespace on path, split it and reduce level by level
                 item.category.replaceAll('_', ' ').split(pathSeparator).reduce((o, label, index, array) => {
                     // Check if next level exist and set to it or add an empty array to push in
                     let temp = (o.items = o.items || []).find(q => q.label === label)

@@ -4,6 +4,8 @@ import axios from "axios";
 import {ListBox} from "primereact/listbox";
 import {Toast} from "primereact/toast";
 import {Panel} from "primereact/panel";
+import {string} from "prop-types";
+import {Card} from "primereact/card";
 
 const DocsRecent = (props) => {
     const [recentList, setrecentList] = useState([]);
@@ -35,7 +37,7 @@ const DocsRecent = (props) => {
         ws.current.onmessage = e => {
             const parsedMessage = JSON.parse(e.data)
             setwsUpdate(parsedMessage)
-            // If event if od type CREATE > shoe info toast
+            // If event if of type CREATE > show info toast
             if (parsedMessage.operation === "CREATE") showToast("info", "Nuovo documento caricato", parsedMessage.filename)
         }
     })
@@ -43,19 +45,37 @@ const DocsRecent = (props) => {
     // Fetch data from backend (url from env)
     const fetchData = async () => {
         const res = await axios(
-            `${process.env.REACT_APP_BACKEND}/api/v1/docs/recent/10`
+            `${process.env.REACT_APP_BACKEND}/api/v1/docs/recent/10?mode=split`
         )
         buildRecentList(res.data.data)
     }
 
     // Extract recent list from raw backend to a prime compatible format
     const buildRecentList = (rawData) => {
-        const data = rawData.map(item => (
+        //TODO: implement category aggregation
+        /*const data = rawData.map(item => (
             {
                 label: item.display_name,
                 value: item.id,
             }
         ))
+        setrecentList(data)*/
+        const data = rawData.reduce((acc, item) => {
+            //Extract category splitting at / using only 1st item
+            const category = item.category.split("/", 1)
+            //Check if acc contain category as key and add it if not
+            if (!(category in acc)) {
+                let newitem = {[item.category.split("/", 1)]: []}
+                acc = {...acc, ...newitem}
+            }
+            //Push actual item data in category key
+            acc[category].push({
+                label: item.display_name,
+                value: item.id,
+            })
+            return acc
+        }, {})
+
         setrecentList(data)
     }
 
@@ -78,15 +98,21 @@ const DocsRecent = (props) => {
 
     // Show toast
     const showToast = (severity, sum, detail) => {
-        toast.current.show({severity: severity, summary: sum, detail: detail, life: 5000});
+        toast.current.show({severity: severity, summary: sum, detail: detail, sticky: true});
     }
 
     return (
         <>
-            <Panel className="p-m-2 childelem" header="Documenti recenti">
-                <div className="card">
+            <Panel className="p-sm-12" header="Documenti recenti">
+                <div className="p-d-flex p-justify-even p-flex-wrap">
                     <Toast ref={toast}/>
-                    <ListBox options={recentList} onChange={(e) => requireFile(e.value)} filter/>
+                    {Object.keys(recentList).map(key => (
+                        <div key={key} className="card p-m-1 childelem">
+                            <h4 className="title">{key.replaceAll('_', ' ')}</h4>
+                            <ListBox options={recentList[key]} onChange={(e) => requireFile(e.value)} filter/>
+                        </div>
+                    ))}
+                    {/*<ListBox options={recentList} onChange={(e) => requireFile(e.value)} filter/>*/}
                 </div>
             </Panel>
         </>

@@ -1,4 +1,9 @@
 .childelem {
-    flex-basis: 500px;
-    flex-grow: 1;
+    justify-content: space-evenly;
+}
+
+.title {
+    font-family: "Segoe UI", Nunito, Tahoma, sans-serif;
+    color: dimgray;
+    margin: 5px;
 }

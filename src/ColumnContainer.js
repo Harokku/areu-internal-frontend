@@ -15,7 +15,7 @@ const ColumnContainer = (props) => {
     //Components to display in the main view
     const [compToDisplay, setCompToDisplay] = useState([
             {id: 'documenti', comp: DocsMenu, props: {key: 'documenti'}, visible: true},
-            {id: 'checkconv', comp: CheckConvention, props: {key: 'checkconv'}, visible: true},
+            {id: 'checkconv', comp: CheckConvention, props: {key: 'checkconv'}, visible: false},
         ]
     )
     //Menu items to display in side menu
@@ -84,7 +84,7 @@ const ColumnContainer = (props) => {
                 id: item.link,
                 comp: TableData,
                 props: {key: item.link, header: item.display_name, content: item.link},
-                visible: true
+                visible: false
             }
         ))
         setCompToDisplay(prev => [...prev, ...componentList])
