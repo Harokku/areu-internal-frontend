@@ -8,6 +8,7 @@ import {Menu} from "primereact/menu";
 import axios from "axios";
 import DocsRecent from "./DocsRecent";
 import CheckConvention from "./CheckConvention";
+import CheckMainContainer from "./CheckMainContainer";
 
 const ColumnContainer = (props) => {
     //If side menu is visible or hidden
@@ -15,7 +16,7 @@ const ColumnContainer = (props) => {
     //Components to display in the main view
     const [compToDisplay, setCompToDisplay] = useState([
             {id: 'documenti', comp: DocsMenu, props: {key: 'documenti'}, visible: true},
-            {id: 'checkconv', comp: CheckConvention, props: {key: 'checkconv'}, visible: false},
+            {id: 'checkconv', comp: CheckMainContainer, props: {key: 'checkconv'}, visible: false},
         ]
     )
     //Menu items to display in side menu

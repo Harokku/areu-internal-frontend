@@ -2,3 +2,22 @@
     flex-basis: 500px;
     flex-grow: 1;
 }
+
+.datatable-rowgroup .p-rowgroup-footer td {
+    font-weight: 700;
+}
+
+.datatable-rowgroup .p-rowgroup-header span {
+    font-weight: 700;
+}
+
+.datatable-rowgroup .p-rowgroup-header .p-row-toggler {
+    vertical-align: middle;
+    margin-right: .25rem;
+}
+
+.title {
+    font-family: "Segoe UI", Nunito, Tahoma, sans-serif;
+    color: dimgray;
+    margin: 5px;
+}
