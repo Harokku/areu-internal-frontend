@@ -4,8 +4,6 @@ import axios from "axios";
 import {ListBox} from "primereact/listbox";
 import {Toast} from "primereact/toast";
 import {Panel} from "primereact/panel";
-import {string} from "prop-types";
-import {Card} from "primereact/card";
 
 const DocsRecent = (props) => {
     const [recentList, setrecentList] = useState([]);

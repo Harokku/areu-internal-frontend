@@ -7,7 +7,6 @@ import {Sidebar} from "primereact/sidebar";
 import {Menu} from "primereact/menu";
 import axios from "axios";
 import DocsRecent from "./DocsRecent";
-import CheckConvention from "./CheckConvention";
 import CheckMainContainer from "./CheckMainContainer";
 
 const ColumnContainer = (props) => {
