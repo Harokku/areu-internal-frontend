@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import PropTypes, {node} from 'prop-types';
+import PropTypes from 'prop-types';
 import {InputText} from "primereact/inputtext";
 import {Button} from "primereact/button";
 import {requestStatus} from "./utils";

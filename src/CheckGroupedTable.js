@@ -6,7 +6,6 @@ import "./CheckConvention.css"
 
 const CheckGroupedTable = props => {
     const [expandedRows, setExpandedRows] = useState([]);
-    const [selectedItems, setSelectedItems] = useState();
 
     const headerTemplate = (data) => {
         return (
@@ -38,29 +37,6 @@ const CheckGroupedTable = props => {
         return total;
     }
 
-    const addMover = (position) => {
-        if (position === "left") {
-            return <Column header="" headerStyle={{width: '3em'}}
-                           body={() => <i className="pi pi-chevron-right" style={{'fontSize': '2em'}}/>}/>
-        }
-    }
-    const reMover = (position) => {
-        if (position === "right") {
-            return <Column header="" headerStyle={{width: '3em'}}
-                           body={() => <i className="pi pi-chevron-left" style={{'fontSize': '2em'}}/>}/>
-        }
-    }
-
-    // Cell selection logic
-    const onCellSelect = (event) => {
-        console.log(`${event.data.id} ${event.data.name}: ${event.data.conv_type}`)
-    }
-
-    const onCellUnselect = (event) => {
-        console.log(`${event.data.id} ${event.data.name}: ${event.data.conv_type}`)
-    }
-
-
     return (
         <>
             <div className="datatable-rowgroup p-m-2">
@@ -76,10 +52,8 @@ const CheckGroupedTable = props => {
                                onRowSelect={(e) => props.onMoveItem(e)} selectionMode="single"
                                dataKey="id"
                     >
-                        {/*{reMover(props.position)}*/}
                         <Column field="conv_type" header="Convenzione"/>
                         <Column field="name" header="Postazione"/>
-                        {/*{addMover(props.position)}*/}
                     </DataTable>
                 </div>
 
