@@ -4,6 +4,7 @@ import axios from "axios";
 import {ListBox} from "primereact/listbox";
 import {Toast} from "primereact/toast";
 import {Panel} from "primereact/panel";
+import moment from "moment";
 
 const DocsRecent = (props) => {
     const [recentList, setrecentList] = useState([]);
@@ -50,7 +51,7 @@ const DocsRecent = (props) => {
 
     // Extract recent list from raw backend to a prime compatible format
     const buildRecentList = (rawData) => {
-        //TODO: implement category aggregation
+        //TODO: Path separator to os agnostic
         /*const data = rawData.map(item => (
             {
                 label: item.display_name,
@@ -60,15 +61,16 @@ const DocsRecent = (props) => {
         setrecentList(data)*/
         const data = rawData.reduce((acc, item) => {
             //Extract category splitting at / using only 1st item
-            const category = item.category.split("/", 1)
+            const category = item.category.split("\\", 1)
             //Check if acc contain category as key and add it if not
             if (!(category in acc)) {
-                let newitem = {[item.category.split("/", 1)]: []}
+                let newitem = {[item.category.split("\\", 1)]: []}
                 acc = {...acc, ...newitem}
             }
             //Push actual item data in category key
             acc[category].push({
                 label: item.display_name,
+                timestamp: item.creation_date,
                 value: item.id,
             })
             return acc
@@ -99,6 +101,15 @@ const DocsRecent = (props) => {
         toast.current.show({severity: severity, summary: sum, detail: detail, sticky: true});
     }
 
+    // Item template to incorporate filename and creationdate
+    const itemTemplate = (option) => {
+        return (
+            <div className="recentelem">
+                <strong>{option.label}</strong> <span><small>{moment(option.timestamp).format('DD/MM/YYYY')}</small></span>
+            </div>
+        )
+    }
+
     return (
         <>
             <Panel className="p-sm-12" header="Documenti recenti">
@@ -107,7 +118,7 @@ const DocsRecent = (props) => {
                     {Object.keys(recentList).map(key => (
                         <div key={key} className="card p-m-1 childelem">
                             <h4 className="title">{key.replaceAll('_', ' ')}</h4>
-                            <ListBox options={recentList[key]} onChange={(e) => requireFile(e.value)} filter/>
+                            <ListBox options={recentList[key]} itemTemplate={itemTemplate} onChange={(e) => requireFile(e.value)} filter/>
                         </div>
                     ))}
                     {/*<ListBox options={recentList} onChange={(e) => requireFile(e.value)} filter/>*/}

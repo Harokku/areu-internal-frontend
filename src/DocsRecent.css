@@ -7,3 +7,9 @@
     color: dimgray;
     margin: 5px;
 }
+
+.recentelem {
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
