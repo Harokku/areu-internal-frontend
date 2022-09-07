@@ -132,7 +132,8 @@ const ColumnContainer = (props) => {
     return (
         <>
             <div className='menucontainer'>
-                <Button icon="pi pi-bars" onClick={() => setShowMenu(true)}/></div>
+                <Button icon="pi pi-bars" onClick={() => setShowMenu(true)}/>
+            </div>
             <Sidebar visible={showMenu} onHide={() => setShowMenu(false)}>
                 <Menu model={menuItems}/>
             </Sidebar>

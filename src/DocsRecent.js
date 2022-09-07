@@ -37,7 +37,8 @@ const DocsRecent = (props) => {
             const parsedMessage = JSON.parse(e.data)
             setwsUpdate(parsedMessage)
             // If event if of type CREATE > show info toast
-            if (parsedMessage.operation === "CREATE") showToast("info", "Nuovo documento caricato", parsedMessage.filename)
+            //TODO: HackFilter for unwanted temporary file exclusion (sync.ffs_lock)
+            if (parsedMessage.operation === "CREATE" && parsedMessage.filename !== "sync.ffs_lock")  showToast("info", "Nuovo documento caricato", parsedMessage.filename)
         }
     })
 
@@ -61,10 +62,10 @@ const DocsRecent = (props) => {
         setrecentList(data)*/
         const data = rawData.reduce((acc, item) => {
             //Extract category splitting at / using only 1st item
-            const category = item.category.split("\\", 1)
+            const category = item.category.split("/", 1)
             //Check if acc contain category as key and add it if not
             if (!(category in acc)) {
-                let newitem = {[item.category.split("\\", 1)]: []}
+                let newitem = {[item.category.split("/", 1)]: []}
                 acc = {...acc, ...newitem}
             }
             //Push actual item data in category key

@@ -11,6 +11,7 @@ import logoAREU from './logoAreu2021.jpg'
 import logoNUE from './logoNUE.png'
 import {Divider} from "primereact/divider";
 import ColumnContainer from "./ColumnContainer"
+import {RecoilRoot} from "recoil";
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
     PrimeReact.ripple = true;
 
     return (
-        <>
+        <RecoilRoot>
             <div className='p-d-flex p-jc-center navposition'>
                 <div className="avatar">
                     <img src={logoAREU}/>
@@ -28,7 +29,7 @@ function App() {
             </div>
             <Divider/>
             <ColumnContainer/>
-        </>
+        </RecoilRoot>
     );
 }
 
