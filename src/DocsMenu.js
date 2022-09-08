@@ -56,7 +56,7 @@ const DocsMenu = props => {
                     if (array[array.length - 1] === label) {
                         temp.items = temp.items || []
                         temp.items.push({
-                            id: item.id,
+                            id: item.hash,
                             label: item.display_name,
                             icon: 'pi pi-file-pdf',
                             command: (event) => requireFile(event.item.id),

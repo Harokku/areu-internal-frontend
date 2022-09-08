@@ -10,7 +10,7 @@ const CheckGroupedTable = props => {
     const headerTemplate = (data) => {
         return (
             <React.Fragment>
-                <span className="image-text">{data.conv_type}</span>
+                <span className="image-text">{data.convenzione}</span>
             </React.Fragment>
         );
     }
@@ -19,7 +19,7 @@ const CheckGroupedTable = props => {
         return (
             <React.Fragment>
                 <td colSpan="2" style={{textAlign: 'right'}}>Postazioni
-                    totali: {calculateCustomerTotal(data.conv_type)}</td>
+                    totali: {calculateCustomerTotal(data.convenzione)}</td>
             </React.Fragment>
         );
     }
@@ -28,7 +28,7 @@ const CheckGroupedTable = props => {
 
         if (props.content) {
             for (let item of props.content) {
-                if (item.conv_type === conv) {
+                if (item.convenzione === conv) {
                     total++;
                 }
             }
@@ -44,16 +44,16 @@ const CheckGroupedTable = props => {
                 <div className="card">
                     <h3 className="title">{props.title}</h3>
                     <p>Raggruppati per convenzione in ordine di postazione</p>
-                    <DataTable value={props.content} rowGroupMode="subheader" groupField="conv_type"
-                               sortMode="single" sortField="conv_type" sortOrder={1}
+                    <DataTable value={props.content} rowGroupMode="subheader" groupField="convenzione"
+                               sortMode="single" sortField="convenzione" sortOrder={1}
                                expandableRowGroups expandedRows={expandedRows}
                                onRowToggle={(e) => setExpandedRows(e.data)}
                                rowGroupHeaderTemplate={headerTemplate} rowGroupFooterTemplate={footerTemplate}
                                onRowSelect={(e) => props.onMoveItem(e)} selectionMode="single"
                                dataKey="id"
                     >
-                        <Column field="conv_type" header="Convenzione"/>
-                        <Column field="name" header="Postazione"/>
+                        <Column field="ente" header="Associazione"/>
+                        <Column field="stazionamento" header="Stazionamento"/>
                     </DataTable>
                 </div>
 

@@ -72,7 +72,7 @@ const DocsRecent = (props) => {
             acc[category].push({
                 label: item.display_name,
                 timestamp: item.creation_date,
-                value: item.id,
+                value: item.hash,
             })
             return acc
         }, {})

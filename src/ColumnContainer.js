@@ -28,6 +28,7 @@ const ColumnContainer = (props) => {
                         id: 'documenti',
                         label: 'Documenti',
                         icon: 'pi pi-fw pi-file',
+                        style: {},
                         command: (event) => componentToggle(event.item.id),
                     },
                 ]
@@ -50,6 +51,7 @@ const ColumnContainer = (props) => {
         ]
     )
 
+    // Fetch data effect
     useEffect(() => {
         fetchData()
     }, [])
@@ -60,6 +62,22 @@ const ColumnContainer = (props) => {
         )
         buildMenu(res.data.data)
     }
+
+    // Menu item active effect
+    // Check displayed component and set menu item background
+    // Traverse hierarchy and set item style based on associated component display state
+    useEffect(() => {
+        setMenuItems(prev => prev.map(m => (
+            {
+                ...m, items: m.items.map(i => {
+                    const componentStatus = compToDisplay.find(item => item.id === i.id)
+                    return {
+                        ...i, style: {background: componentStatus.visible ? 'darkcyan' : "unset"}
+                    }
+                })
+            }
+        )))
+    }, [compToDisplay])
 
     //Build menu object based on backend index data and update state
     const buildMenu = (index) => {
@@ -92,6 +110,7 @@ const ColumnContainer = (props) => {
 
     //Toggle component visibility
     const componentToggle = (id) => {
+        // Set component visible property do display it
         setCompToDisplay(prev => prev.map(i =>
             i.id === id
                 ? {...i, visible: !i.visible}
