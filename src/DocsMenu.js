@@ -23,7 +23,7 @@ const DocsMenu = props => {
             const result = filtered.map(item => (
                 {
                     label: item.display_name,
-                    value: item.id
+                    value: item.hash,
                 }
             ))
 

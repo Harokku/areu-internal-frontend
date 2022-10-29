@@ -5,6 +5,7 @@ import {ListBox} from "primereact/listbox";
 import {Toast} from "primereact/toast";
 import {Panel} from "primereact/panel";
 import moment from "moment";
+import {Button} from "primereact/button";
 
 const DocsRecent = (props) => {
     const [recentList, setrecentList] = useState([]);
@@ -38,9 +39,27 @@ const DocsRecent = (props) => {
             setwsUpdate(parsedMessage)
             // If event if of type CREATE > show info toast
             //TODO: HackFilter for unwanted temporary file exclusion (sync.ffs_lock)
-            if (parsedMessage.operation === "CREATE" && parsedMessage.filename !== "sync.ffs_lock")  showToast("info", "Nuovo documento caricato", parsedMessage.filename)
+            if (parsedMessage.operation === "CREATE" && parsedMessage.filename !== "sync.ffs_lock") toast.current.show({
+                severity: 'info',
+                content: (
+                    <div className="flex flex-column" style={{flex: '1'}}>
+                        <div className="text-center">
+                            <h4>Nuovo documento caricato</h4>
+                            <p>{parsedMessage.filename}</p>
+                        </div>
+                        <div className="grid p-fluid">
+                            <div className="col-6">
+                                <Button type="button" label="Apri documento" className="p-button-success"
+                                        onClick={() => requireFile(parsedMessage.hash)}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                ),
+            })
         }
     })
+    // showToast("info", "Nuovo documento caricato", parsedMessage.filename)
 
     // Fetch data from backend (url from env)
     const fetchData = async () => {
@@ -106,7 +125,8 @@ const DocsRecent = (props) => {
     const itemTemplate = (option) => {
         return (
             <div className="recentelem">
-                <strong>{option.label}</strong> <span><small>{moment(option.timestamp).format('DD/MM/YYYY')}</small></span>
+                <strong>{option.label}</strong>
+                <span><small>{moment(option.timestamp).format('DD/MM/YYYY')}</small></span>
             </div>
         )
     }
@@ -119,7 +139,8 @@ const DocsRecent = (props) => {
                     {Object.keys(recentList).map(key => (
                         <div key={key} className="card p-m-1 childelem">
                             <h4 className="title">{key.replaceAll('_', ' ')}</h4>
-                            <ListBox options={recentList[key]} itemTemplate={itemTemplate} onChange={(e) => requireFile(e.value)} filter/>
+                            <ListBox options={recentList[key]} itemTemplate={itemTemplate}
+                                     onChange={(e) => requireFile(e.value)} filter/>
                         </div>
                     ))}
                     {/*<ListBox options={recentList} onChange={(e) => requireFile(e.value)} filter/>*/}

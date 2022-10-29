@@ -53,6 +53,7 @@ const CheckGroupedTable = props => {
                                dataKey="id"
                     >
                         <Column field="ente" header="Associazione"/>
+                        <Column field="minimum" header="Eq minimo"/>
                         <Column field="stazionamento" header="Stazionamento"/>
                     </DataTable>
                 </div>
