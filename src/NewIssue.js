@@ -15,8 +15,8 @@ const NewIssue = props => {
         {name: 'Normale', value: 2},
         {name: 'Alta', value: 3}
     ];
-    const [operator, setOperator] = useState('')
-    const [issueText, setIssueText] = useState('')
+    const [operator, setOperator] = useState(null)
+    const [issueText, setIssueText] = useState(null)
     const [priority, setPriority] = useState(2)
     const [postRequestStatus, setPostRequestStatus] = useState(requestStatus.IDLE)
 
@@ -36,6 +36,13 @@ const NewIssue = props => {
                 note: issueText,
             }
         }
+
+        // Check form validity
+        if (!formOkStatus()) {
+            setPostRequestStatus(requestStatus.IDLE)
+            return
+        }
+
         // Axios post call
         try {
             await axios(options)
@@ -45,9 +52,13 @@ const NewIssue = props => {
         }
     }
 
+    const formOkStatus = () => (
+        operator !== null && issueText !== null
+    )
+
     const resetForm = () => {
-        setOperator('')
-        setIssueText('')
+        setOperator(null)
+        setIssueText(null)
         setPriority(2)
         setPostRequestStatus(requestStatus.IDLE)
     }
@@ -80,17 +91,11 @@ const NewIssue = props => {
                                         <Message severity="error" text="Errore durante l'invio, dati NON salvati"/>
                                     </div>
                                     <br/>
-                                    <div className="p-d-flex p-justify-even">
-                                        <Button
-                                            onClick={() => setPostRequestStatus(requestStatus.IDLE)}
-                                            className="p-button-raised p-button-danger"
-                                            label="Riprova invio"
-                                        />
-                                    </div>
                                 </>
                             }
 
-                            <div className='p-pb-2'>
+                            <div
+                                className={`p-pb-2 ${props.status === requestStatus.IDLE || requestStatus.ERROR ? "" : "p-disabled"}`}>
                                 <div className="col-6 md:col-4">
                                     <div className="p-inputgroup">
                             <span className="p-inputgroup-addon">
