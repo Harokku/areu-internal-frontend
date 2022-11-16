@@ -39,7 +39,7 @@ const DocsRecent = (props) => {
             setwsUpdate(parsedMessage)
             // If event if of type CREATE > show info toast
             //TODO: HackFilter for unwanted temporary file exclusion (sync.ffs_lock)
-            if (parsedMessage.operation === "CREATE" && parsedMessage.filename !== "sync.ffs_lock") toast.current.show({
+            if (parsedMessage.id === "Filewatcher event" && parsedMessage.operation === "CREATE" && parsedMessage.filename !== "sync.ffs_lock") toast.current.show({
                 severity: 'info',
                 content: (
                     <div className="flex flex-column" style={{flex: '1'}}>

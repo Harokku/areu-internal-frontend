@@ -8,6 +8,7 @@ import {Menu} from "primereact/menu";
 import axios from "axios";
 import DocsRecent from "./DocsRecent";
 import CheckMainContainer from "./CheckMainContainer";
+import NewIssue from "./NewIssue"
 
 const ColumnContainer = (props) => {
     //If side menu is visible or hidden
@@ -16,6 +17,8 @@ const ColumnContainer = (props) => {
     const [compToDisplay, setCompToDisplay] = useState([
             {id: 'documenti', comp: DocsMenu, props: {key: 'documenti'}, visible: true},
             {id: 'checkconv', comp: CheckMainContainer, props: {key: 'checkconv'}, visible: false},
+            {id: 'issueList', visible: false},
+            {id: 'issueNew', comp: NewIssue, visible: false},
         ]
     )
     //Menu items to display in side menu
@@ -48,6 +51,23 @@ const ColumnContainer = (props) => {
                     }
                 ]
             },
+            {
+                label: "Consegne",
+                items: [
+                    {
+                        id: 'issueList',
+                        label: 'Consegne',
+                        icon: 'pi pi-fw pi-list',
+                        command: () => openLinkInNewTab(),
+                    },
+                    {
+                        id: 'issueNew',
+                        label: 'Nuova consegna',
+                        icon: 'pi pi-fw pi-list',
+                        command: (event) => componentToggle(event.item.id),
+                    }
+                ]
+            }
         ]
     )
 
@@ -116,6 +136,10 @@ const ColumnContainer = (props) => {
                 ? {...i, visible: !i.visible}
                 : i
         ))
+    }
+
+    const openLinkInNewTab = () => {
+        window.open(`${process.env.REACT_APP_BACKEND}/issuedashboard`)
     }
 
     // Toggle items based on menu selection
