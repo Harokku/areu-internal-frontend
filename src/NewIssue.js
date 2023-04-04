@@ -17,6 +17,7 @@ const NewIssue = props => {
     ];
     const [operator, setOperator] = useState(null)
     const [issueText, setIssueText] = useState(null)
+    const [issueTitle, setIssueTitle] = useState(null)
     const [priority, setPriority] = useState(2)
     const [postRequestStatus, setPostRequestStatus] = useState(requestStatus.IDLE)
 
@@ -33,6 +34,7 @@ const NewIssue = props => {
             data: {
                 operator: operator,
                 priority: priority,
+                title: issueTitle,
                 note: issueText,
             }
         }
@@ -59,6 +61,7 @@ const NewIssue = props => {
     const resetForm = () => {
         setOperator(null)
         setIssueText(null)
+        setIssueTitle(null)
         setPriority(2)
         setPostRequestStatus(requestStatus.IDLE)
     }
@@ -98,9 +101,9 @@ const NewIssue = props => {
                                 className={`p-pb-2 ${props.status === requestStatus.IDLE || requestStatus.ERROR ? "" : "p-disabled"}`}>
                                 <div className="col-6 md:col-4">
                                     <div className="p-inputgroup">
-                            <span className="p-inputgroup-addon">
-                                <i className="pi pi-user"></i>
-                            </span>
+                                        <span className="p-inputgroup-addon">
+                                            <i className="pi pi-user"></i>
+                                        </span>
                                         <InputText
                                             value={operator}
                                             onChange={(e) => setOperator(e.target.value)}
@@ -111,9 +114,22 @@ const NewIssue = props => {
                                 <h4>Testo Consegna</h4>
                                 <div className="col-6 md:col-4">
                                     <div className="p-inputgroup">
-                            <span className="p-inputgroup-addon">
-                                <i className="pi pi-list"></i>
-                            </span>
+                                        <span className="p-inputgroup-addon">
+                                            <i className="pi pi-list"></i>
+                                        </span>
+                                        <InputTextarea
+                                            value={issueTitle} onChange={(e) => setIssueTitle(e.target.value)} rows={1}
+                                            cols={30}
+                                            autoResize/>
+                                    </div>
+                                </div>
+                                <br/>
+                                <h4>Testo Consegna</h4>
+                                <div className="col-6 md:col-4">
+                                    <div className="p-inputgroup">
+                                        <span className="p-inputgroup-addon">
+                                            <i className="pi pi-list"></i>
+                                        </span>
                                         <InputTextarea
                                             value={issueText} onChange={(e) => setIssueText(e.target.value)} rows={5}
                                             cols={30}

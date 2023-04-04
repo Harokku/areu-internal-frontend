@@ -139,7 +139,7 @@ const ColumnContainer = (props) => {
     }
 
     const openLinkInNewTab = () => {
-        window.open(`${process.env.REACT_APP_BACKEND}/issuedashboard`)
+        window.open(`${process.env.REACT_APP_BACKEND}/issuedashboard/`)
     }
 
     // Toggle items based on menu selection
