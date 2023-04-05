@@ -111,7 +111,7 @@ const NewIssue = props => {
                                     </div>
                                 </div>
                                 <br/>
-                                <h4>Testo Consegna</h4>
+                                <h4>Titolo Consegna</h4>
                                 <div className="col-6 md:col-4">
                                     <div className="p-inputgroup">
                                         <span className="p-inputgroup-addon">

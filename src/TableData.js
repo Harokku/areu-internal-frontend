@@ -29,7 +29,9 @@ const TableData = props => {
     }
 
     const renderLinkTemplate = (rawData, content) => {
-        return rawData[content].startsWith("http://") || rawData[content].startsWith("https://") ? <a href={rawData[content]} target="_blank" rel="noopener noreferrer">Apri link</a> : <span>{rawData[content]}</span>
+        let data
+        data = content in rawData ? rawData[content] : "";
+        return data.startsWith("http://") || data.startsWith("https://") ? <a href={data} target="_blank" rel="noopener noreferrer">Apri link</a> : <span>{data}</span>
     }
 
     return (

@@ -56,13 +56,13 @@ const ColumnContainer = (props) => {
                 items: [
                     {
                         id: 'issueList',
-                        label: 'Consegne',
+                        label: 'Consegne (Beta - WIP)',
                         icon: 'pi pi-fw pi-list',
                         command: () => openLinkInNewTab(),
                     },
                     {
                         id: 'issueNew',
-                        label: 'Nuova consegna',
+                        label: 'Nuova consegna (Beta - WIP)',
                         icon: 'pi pi-fw pi-list',
                         command: (event) => componentToggle(event.item.id),
                     }
