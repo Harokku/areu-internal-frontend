@@ -9,6 +9,7 @@ import axios from "axios";
 import DocsRecent from "./DocsRecent";
 import CheckMainContainer from "./CheckMainContainer";
 import NewIssue from "./NewIssue"
+import DocsFrequent from "./DocsFrequent";
 
 const ColumnContainer = (props) => {
     //If side menu is visible or hidden
@@ -16,6 +17,7 @@ const ColumnContainer = (props) => {
     //Components to display in the main view
     const [compToDisplay, setCompToDisplay] = useState([
             {id: 'documenti', comp: DocsMenu, props: {key: 'documenti'}, visible: true},
+            {id: 'frequenti', comp: DocsFrequent, props: {key: 'frequenti'}, visible: false},
             {id: 'checkconv', comp: CheckMainContainer, props: {key: 'checkconv'}, visible: false},
             {id: 'issueList', visible: false},
             {id: 'issueNew', comp: NewIssue, visible: false},
@@ -34,6 +36,12 @@ const ColumnContainer = (props) => {
                         style: {},
                         command: (event) => componentToggle(event.item.id),
                     },
+                    {
+                        id: 'frequenti',
+                        label: 'Frequenti',
+                        icon: 'pi pi-fw pi-clock',
+                        command: (event) => componentToggle(event.item.id),
+                    }
                 ]
             },
             {
