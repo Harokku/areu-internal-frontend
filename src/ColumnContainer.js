@@ -17,7 +17,8 @@ const ColumnContainer = (props) => {
     //Components to display in the main view
     const [compToDisplay, setCompToDisplay] = useState([
             {id: 'documenti', comp: DocsMenu, props: {key: 'documenti'}, visible: true},
-            {id: 'frequenti', comp: DocsFrequent, props: {key: 'frequenti'}, visible: false},
+            {id: 'frequentbyip', comp: DocsFrequent, props: {key: 'frequentbyip', mode: "byip"}, visible: false},
+            {id: 'frequentbyfunc', comp: DocsFrequent, props: {key: 'frequentbyfunc', mode: "byfunction"}, visible: false},
             {id: 'checkconv', comp: CheckMainContainer, props: {key: 'checkconv'}, visible: false},
             {id: 'issueList', visible: false},
             {id: 'issueNew', comp: NewIssue, visible: false},
@@ -37,8 +38,14 @@ const ColumnContainer = (props) => {
                         command: (event) => componentToggle(event.item.id),
                     },
                     {
-                        id: 'frequenti',
-                        label: 'Frequenti',
+                        id: 'frequentbyip',
+                        label: 'Frequenti per postazione',
+                        icon: 'pi pi-fw pi-clock',
+                        command: (event) => componentToggle(event.item.id),
+                    },
+                    {
+                        id: 'frequentbyfunc',
+                        label: 'Frequenti per funzione',
                         icon: 'pi pi-fw pi-clock',
                         command: (event) => componentToggle(event.item.id),
                     }

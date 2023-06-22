@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useRef} from "react";
+import "./DocsRecent.css"
 import axios from "axios";
 import {ListBox} from "primereact/listbox";
 import {Toast} from "primereact/toast";
@@ -7,6 +8,15 @@ import {Button} from "primereact/button";
 
 // DocsFrequent component
 const DocsFrequent = (props) => {
+    const mode = {
+        byip: "byIp",
+        byfunction: "byFunction/ip",
+    } // Mode enum to change aggregation mode
+    const displayMode = {
+        byip: "postazione",
+        byfunction: "funzione",
+    } // Display mode enum to change aggregation mode
+
     const [frequentList, setfrequentList] = useState([]); // State for frequent docs list
     const [wsUpdate, setwsUpdate] = useState(null); // State for WS update
 
@@ -28,7 +38,7 @@ const DocsFrequent = (props) => {
 
     // Fetch data function
     const fetchData = async () => {
-        const res = await axios.get(`${process.env.REACT_APP_BACKEND}/api/v1/favourites/own`)
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND}/api/v1/favourites/${mode[props.mode]}/own`)
         buildFrequentList(res.data.data)
     }
 
@@ -62,10 +72,10 @@ const DocsFrequent = (props) => {
 
     return (
         <>
-            <Panel className="p-sm-12" header="Documenti frequenti">
+            <Panel className="p-sm-12 childelem" header={`Documenti frequenti per ${displayMode[props.mode]}`}>
                 <div className="p-d-flex p-justify-even p-flex-wrap">
                     <div  className="card p-m-1 childelem">
-                        <ListBox options={frequentList} optionLabel="label" optionValue="value" filter
+                        <ListBox options={frequentList} optionLabel="label" optionValue="value"
                         onChange={e => requireFile(e.value)}/>
                     </div>
                 </div>
