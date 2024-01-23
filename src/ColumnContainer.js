@@ -10,6 +10,7 @@ import DocsRecent from "./DocsRecent";
 import CheckMainContainer from "./CheckMainContainer";
 import NewIssue from "./NewIssue"
 import DocsFrequent from "./DocsFrequent";
+import EpcrIssue from "./EpcrIssue";
 
 const ColumnContainer = (props) => {
     //If side menu is visible or hidden
@@ -92,10 +93,43 @@ const ColumnContainer = (props) => {
     }, [])
 
     const fetchData = async () => {
+        // Info menu data fetch
         const res = await axios(
             `${process.env.REACT_APP_BACKEND}/api/v1/content`
         )
         buildMenu(res.data.data)
+
+        // Check if client ip is in te auth list and build epcr issue menu
+        try {
+            const res = await axios(
+                `${process.env.REACT_APP_BACKEND}/api/v1/auth/epcr`
+            )
+
+            // Check if status code = 200 and build menu (authorized)
+            if (res.status === 200) {
+                buildCheck()
+            } else if (res.status === 401) {
+                console.info("Not authorized to access epcr issue tracker function")
+            } else {
+                console.error("Unhandled return code checking for epcr issue manager:\t" + res.status)
+            }
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 401) {
+                    console.log("Unauthorized: Access is denied due to invalid credentials.");
+                } else {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    console.log("Error status: " + error.response.status);
+                }
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.log("No response received");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log("Error", error.message);
+            }
+        }
     }
 
     // Menu item active effect
@@ -113,6 +147,31 @@ const ColumnContainer = (props) => {
             }
         )))
     }, [compToDisplay])
+
+
+    //BuildCheck build check menu items based on backend data and update state
+    const buildCheck = () => {
+        const menuItem = {
+            id: "epcrissue",
+            label: "Problemi ePCR",
+            icon: 'pi pi-fw pi-ticket',
+            command: (event) => componentToggle(event.item.id)
+        }
+        // Add menu item to menu items list at the right place (under check submenu)
+        setMenuItems(prev => prev.map(i => (
+            i.label === "Check"
+                ? {...i, items: [...i.items || [], menuItem] }
+                : i
+        )))
+        // Build new component item and add to component to display array
+        const componentItem = {
+            id: 'epcrissue',
+            comp: EpcrIssue,
+            // props: {},
+            visible: true
+        }
+        setCompToDisplay(prev => [...prev, componentItem])
+    }
 
     //Build menu object based on backend index data and update state
     const buildMenu = (index) => {

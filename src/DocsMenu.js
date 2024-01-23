@@ -84,6 +84,8 @@ const DocsMenu = props => {
 
         // Show downloaded blob in a new browser tab
         const showInBrowser = (blob) => {
+            console.log("showInBrowser")
+            console.log(blob)
             //let newBlob = new Blob([blob], {type: "application/pdf"})
             const data = URL.createObjectURL(blob)
             window.open(data, '_blank')
