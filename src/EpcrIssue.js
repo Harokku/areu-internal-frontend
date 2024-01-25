@@ -15,6 +15,25 @@ const EpcrIssue = props => {
         }
     )
 
+    /**
+     * Resets the IDLE status after a specified time interval.
+     * @function resetIDLEStatusafterT
+     * @description Resets the request status to IDLE after a specified time interval of 3000 milliseconds.
+     */
+    const resetIDLEStatusafterT = () => {
+        setTimeout(() => {
+            setPostRequestStatus(requestStatus.IDLE)
+        }, 3000)
+    }
+
+    /**
+     * Sends a post request to the backend API with the given data.
+     * Save the new issue in db
+     *
+     * @async
+     * @function postData
+     * @returns {void}
+     */
     const postData = async () => {
         setPostRequestStatus(requestStatus.INFLIGHT)
         // Axios post config
@@ -33,14 +52,20 @@ const EpcrIssue = props => {
         try {
             await axios(options)
             setPostRequestStatus(requestStatus.COMPLETED)
+            resetIDLEStatusafterT()
         } catch (e) {
+            resetIDLEStatusafterT()
             setPostRequestStatus(requestStatus.ERROR)
         }
     }
 
     return (
         <>
-            <Panel className="p-m-2 childelem" header="Notifica carenza ePCR">
+            <Panel className="p-m-2 childelem" header="Notifica carenze formative ePCR">
+                <p><Message severity={"success"} text={"Inviare SOLO"}/> carenze formative/errori da parte del personale
+                    operante su MSB/MSA</p>
+                <p><Message severity={"error"} text={"NON inviare"}/> problemi tecnici dell'applicativo, ne suggerimenti
+                    migliorativi</p>
 
                 {
                     postRequestStatus === requestStatus.COMPLETED
